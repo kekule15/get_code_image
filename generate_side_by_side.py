@@ -30,7 +30,7 @@ HTML_TEMPLATE = """
       box-shadow: 0 25px 60px rgba(0,0,0,0.5);
       overflow: hidden;
       flex: 1;
-      min-width: 420px;
+      min-width: 0;
     }
     .titlebar {
       background: #21262d;
@@ -50,10 +50,12 @@ HTML_TEMPLATE = """
       font-weight: 500;
     }
     pre {
-      padding: 24px 28px;
-      font-size: 14.5px;
-      line-height: 1.55;
-      overflow-x: auto;
+     padding: 24px 28px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
     }
     code {
       font-family: "SF Mono", "Fira Code", Menlo, monospace !important;

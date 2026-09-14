@@ -48,7 +48,9 @@ HTML_TEMPLATE = """
       padding: 28px 32px;
       font-size: 15.5px;
       line-height: 1.6;
-      overflow-x: auto;
+      white-space: pre-wrap;
+overflow-wrap: anywhere;
+word-break: break-word;
     }
     code {
       font-family: "SF Mono", "Fira Code", "JetBrains Mono", Menlo, monospace !important;
