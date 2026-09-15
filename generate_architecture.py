@@ -66,6 +66,31 @@ def build_comparison_content():
 </div>'''
 
 
+
+def build_event_driven_content():
+    return """
+    <div class="content">
+      <div class="panel">
+        <div class="panel-header">Event-Driven Architecture</div>
+        <div class="panel-body">
+          <div class="event-flow">
+            <div class="service">Order Service<br><span style="color:#8b949e;">Order Created</span></div>
+            <div class="event-arrow">→</div>
+            <div class="service">Event Producer<br><span style="color:#8b949e;">publish()</span></div>
+          </div>
+          <div class="event-bus">EVENT BUS / MESSAGE BROKER</div>
+          <div class="event-flow">
+            <div class="service">Payment Service<br><span style="color:#8b949e;">consume</span></div>
+            <div class="event-arrow">←</div>
+            <div class="service">Notification Service<br><span style="color:#8b949e;">consume</span></div>
+          </div>
+          <div class="description">Producers publish events without directly calling every consumer.<br>Consumers react independently to events.</div>
+        </div>
+      </div>
+    </div>
+    """
+
+
 def generate_architecture(title="Monolith vs Microservices", output="architecture.png", mode="comparison", nodes=None):
     if mode == "modular_monolith":
         nodes = nodes or ["Orders", "Payments", "Users", "Catalog", "Billing"]
@@ -100,7 +125,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate architecture images for X posts")
     parser.add_argument("--title", default="Monolith vs Microservices")
     parser.add_argument("--output", default="architecture.png")
-    parser.add_argument("--mode", default="comparison", choices=["comparison", "modular_monolith", "distributed-monolith"])
+    parser.add_argument("--mode", default="comparison", choices=["comparison", "modular_monolith", "distributed-monolith", "event-driven"])
     parser.add_argument("--nodes", default="Orders,Payments,Users,Catalog,Billing", help="Comma-separated module names")
     args = parser.parse_args()
 
