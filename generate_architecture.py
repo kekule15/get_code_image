@@ -46,6 +46,13 @@ def build_modular_monolith_content(nodes):
     return f'''<div class="content"><div class="panel full"><div class="panel-header">Modular Monolith</div><div class="panel-body"><div class="module-grid">{modules}</div><div class="description">Independent domain modules with clear boundaries<br>inside one deployable application.</div></div></div></div>'''
 
 
+
+
+def build_distributed_monolith_content(nodes):
+    services = "".join(f'<div class="module">{html.escape(node)} Service</div>' for node in nodes)
+    return f'''<div class="content"><div class="panel full"><div class="panel-header">Distributed Monolith</div><div class="panel-body"><div class="module-grid">{services}</div><div class="description">Multiple deployable services with tight coupling<br>and shared dependencies that make the system behave like one.</div></div></div></div>'''
+
+
 def build_comparison_content():
     return '''<div class="content">
 <div class="panel"><div class="panel-header">Monolith</div><div class="panel-body">
@@ -64,6 +71,10 @@ def generate_architecture(title="Monolith vs Microservices", output="architectur
         nodes = nodes or ["Orders", "Payments", "Users", "Catalog", "Billing"]
         content = build_modular_monolith_content(nodes)
         footer = "One application. Clear module boundaries. Independent internal domains."
+    elif mode == "distributed-monolith":
+        nodes = nodes or ["Orders", "Payments", "Users", "Catalog", "Billing"]
+        content = build_distributed_monolith_content(nodes)
+        footer = "Separate deployments do not automatically create independent services."
     else:
         content = build_comparison_content()
         footer = "Different trade-offs. Neither architecture is automatically better."
@@ -89,7 +100,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate architecture images for X posts")
     parser.add_argument("--title", default="Monolith vs Microservices")
     parser.add_argument("--output", default="architecture.png")
-    parser.add_argument("--mode", default="comparison", choices=["comparison", "modular_monolith"])
+    parser.add_argument("--mode", default="comparison", choices=["comparison", "modular_monolith", "distributed-monolith"])
     parser.add_argument("--nodes", default="Orders,Payments,Users,Catalog,Billing", help="Comma-separated module names")
     args = parser.parse_args()
 
