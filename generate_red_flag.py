@@ -56,6 +56,7 @@ HTML_TEMPLATE = """
       white-space: pre-wrap;
 overflow-wrap: anywhere;
 word-break: break-word;
+color: #c9d1d9;
     }
     code {
       font-family: "SF Mono", "Fira Code", Menlo, monospace !important;
