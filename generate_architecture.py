@@ -461,13 +461,62 @@ def build_distributed_monolith_content():
     """
 
 
+def build_service_chain_content():
+    return """
+    <div class="content">
+      <div class="panel">
+        <div class="panel-header">Synchronous Service Chain</div>
+        <div class="panel-body">
+          <div class="comparison">
+            <div class="panel">
+              <div class="panel-header">Request Flow</div>
+              <div class="comparison-body">
+                <div class="node">API Gateway</div>
+                <div class="arrow">↓</div>
+                <div class="node">Order Service</div>
+                <div class="arrow">↓</div>
+                <div class="node">Payment Service</div>
+                <div class="arrow">↓</div>
+                <div class="node">Notification Service</div>
+                <div class="comparison-description">
+                  Each service waits for the next response
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">Failure / Latency Propagation</div>
+              <div class="comparison-body">
+                <div class="node">Payment takes 2s</div>
+                <div class="arrow">↓</div>
+                <div class="node">Order waits 2s</div>
+                <div class="arrow">↓</div>
+                <div class="node">Gateway waits 2s</div>
+                <div class="arrow">↓</div>
+                <div class="node">User waits 2s+</div>
+                <div class="comparison-description">
+                  One slow dependency can slow the entire request
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+
+
 def generate_architecture(
     title="Monolith vs Microservices",
     output="architecture.png",
     mode="comparison",
     nodes=None,
 ):
-    if mode == "event-driven":
+    if mode == "service-chain":
+        content = build_service_chain_content()
+        footer = "Every synchronous hop adds latency and another dependency to the request path."
+
+    elif mode == "event-driven":
         content = build_event_driven_content()
         footer = "Publish events. Let interested consumers react independently."
 
@@ -540,7 +589,8 @@ if __name__ == "__main__":
             "comparison",
             "modular_monolith",
             "distributed-monolith",
-            "event-driven"
+            "event-driven",
+            "service-chain"
         ]
     )
 
