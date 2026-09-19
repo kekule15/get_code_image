@@ -223,10 +223,14 @@ body {{ background:#0d1117; padding:42px; font-family:-apple-system,BlinkMacSyst
 
     with sync_playwright() as p:
         browser=p.chromium.launch()
-        page=p.new_page(viewport={'width':width+84,'height':1000},device_scale_factor=2)
+        page = browser.new_page(
+        viewport={"width": width + 84, "height": 1000},
+        device_scale_factor=2
+       )
         page.goto('file://'+fn)
         page.wait_for_timeout(200)
-        page.query_selector('.window').screenshot(path=output)
+        window = page.query_selector(".window")
+        window.screenshot(path=output)
         browser.close()
 
     print(f'✅ Code image saved → {output}')
